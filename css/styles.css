@@ -1,7 +1,7 @@
 /* ==========================================================================
    Xin Shui
    Palette and type are locked brand assets. Do not substitute.
-   Image slots are marked IMAGE SLOT. Replace the gradient with url(...).
+   All photography lives in assets/img and is wired in below.
    ========================================================================== */
 
 :root{
@@ -208,10 +208,7 @@ svg{width:100%;height:100%}
 /* ---------- Split ---------- */
 .split{display:grid;grid-template-columns:1fr 1fr;min-height:min(58vh,470px)}
 .split-media{
-  /* IMAGE SLOT 1: url("../assets/img/split.jpg") center/cover no-repeat */
-  background:
-    linear-gradient(200deg,rgba(255,255,255,.20),rgba(23,64,102,.35)),
-    linear-gradient(160deg,#e6d9c4 0%,#b9cadb 45%,#3f6f97 100%);
+  background:url("../assets/img/split.jpg") center/cover no-repeat;
 }
 .split-copy{background:var(--pale);display:flex;align-items:center}
 .split-copy-in{padding:clamp(38px,6vw,74px);max-width:490px}
@@ -220,10 +217,7 @@ svg{width:100%;height:100%}
 .split-copy .btn-text{margin-top:26px}
 
 /* ---------- Elements ----------
-   Brand colour discs, matching the locked tokens and the Instagram grid.
-   To go photographic instead, replace each gradient with
-   url("../assets/img/el-wood.jpg") center/cover no-repeat.
-   Source at 400x400 minimum or they will look soft. */
+   Photographic discs, 500x500 square crops. */
 .elements{background:#fff}
 .el-in{
   display:grid;grid-template-columns:repeat(5,1fr);gap:20px;
@@ -236,11 +230,12 @@ svg{width:100%;height:100%}
   box-shadow:0 10px 24px rgba(23,64,102,.12);
 }
 .el:hover .el-disc{transform:translateY(-5px);box-shadow:0 16px 30px rgba(23,64,102,.20)}
-.el-wood{background:linear-gradient(160deg,#5b8a72,var(--wood))}
-.el-fire{background:linear-gradient(160deg,#c2705c,var(--fire))}
-.el-earth{background:linear-gradient(160deg,#b79c72,var(--earth))}
-.el-metal{background:linear-gradient(160deg,#93a2ad,var(--metal))}
-.el-water{background:linear-gradient(160deg,#3a628f,var(--water))}
+.el-disc{background-position:center;background-size:cover;background-repeat:no-repeat}
+.el-wood{background-image:url("../assets/img/el-wood.jpg")}
+.el-fire{background-image:url("../assets/img/el-fire.jpg")}
+.el-earth{background-image:url("../assets/img/el-earth.jpg")}
+.el-metal{background-image:url("../assets/img/el-metal.jpg")}
+.el-water{background-image:url("../assets/img/el-water.jpg")}
 .el-name{
   font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
 }
@@ -249,14 +244,8 @@ svg{width:100%;height:100%}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line)}
 .duo-card{background:var(--pale);display:flex;flex-direction:column}
 .duo-media{aspect-ratio:16/9;background-position:center;background-size:cover}
-.duo-media-1{
-  /* IMAGE SLOT 2: url("../assets/img/duo-1.jpg") */
-  background-image:linear-gradient(150deg,#f2ece2 0%,#cdd9e4 60%,#6f8ea9 100%);
-}
-.duo-media-2{
-  /* IMAGE SLOT 3: url("../assets/img/duo-2.jpg") */
-  background-image:linear-gradient(150deg,#f6f3ee 0%,#e2e7ea 55%,#a9b8c4 100%);
-}
+.duo-media-1{background-image:url("../assets/img/duo-1.jpg")}
+.duo-media-2{background-image:url("../assets/img/duo-2.jpg")}
 .duo-body{padding:clamp(24px,3.4vw,38px)}
 .duo-body h3{font-size:clamp(21px,2.4vw,26px)}
 .duo-body p{margin-top:8px;color:var(--ink-60);font-size:14px}
@@ -291,8 +280,13 @@ svg{width:100%;height:100%}
 /* ---------- CTA and enquiry form ---------- */
 .cta{
   position:relative;padding-block:clamp(60px,8vw,104px);
-  /* IMAGE SLOT 4: url("../assets/img/cta.jpg") center/cover no-repeat */
-  background:linear-gradient(180deg,#d4e4f0 0%,#a9c6dd 55%,#7ea7c7 100%);
+  background:url("../assets/img/cta.jpg") center/cover no-repeat;
+}
+/* Softens the photograph behind the copy and the form. */
+.cta::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 50%,rgba(255,255,255,.30) 100%);
+  pointer-events:none;
 }
 .cta-in{
   position:relative;z-index:2;
