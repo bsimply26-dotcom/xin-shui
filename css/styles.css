@@ -56,13 +56,14 @@ svg{width:100%;height:100%}
   display:inline-flex;align-items:center;gap:10px;
   font-family:var(--body);font-size:12px;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;
+  border:0;cursor:pointer;
 }
 .btn-solid{
   background:var(--deep);color:#fff;padding:15px 26px;border-radius:3px;
   transition:background .25s ease,transform .25s ease;
 }
 .btn-solid:hover{background:#18598a;transform:translateY(-1px)}
-.btn-text{color:var(--deep)}
+.btn-text{color:var(--deep);background:none}
 .arrow{
   display:inline-block;width:26px;height:1px;background:currentColor;position:relative;
   transition:width .25s ease;
@@ -73,17 +74,22 @@ svg{width:100%;height:100%}
 }
 .btn-text:hover .arrow{width:38px}
 
-/* ---------- Nav ---------- */
+/* ---------- Nav ----------
+   Solid white at all times so the header reads as a separate band above the
+   banner. The .is-stuck class still applies on scroll and only deepens the
+   shadow. */
 .nav{
   position:fixed;inset:0 0 auto 0;z-index:100;height:var(--nav-h);
   display:flex;align-items:center;
-  transition:background .3s ease,box-shadow .3s ease;
+  background:var(--white);
+  border-bottom:1px solid var(--line);
+  transition:box-shadow .3s ease;
 }
-.nav.is-stuck{background:rgba(255,255,255,.94);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
+.nav.is-stuck{box-shadow:0 2px 14px rgba(23,64,102,.08)}
 .nav-in{display:flex;align-items:center;gap:24px}
 
 .brand{display:flex;align-items:center;gap:11px;flex:0 0 auto}
-.brand-mark{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.brand-mark{width:38px;height:38px;object-fit:contain}
 .brand-name{
   font-family:var(--display);font-size:19px;font-weight:500;
   letter-spacing:.22em;text-transform:uppercase;
@@ -108,68 +114,79 @@ svg{width:100%;height:100%}
   padding:8px var(--pad) 26px;
   display:flex;flex-direction:column;gap:2px;
 }
+/* FIX: the hidden attribute now wins. This was the desktop menu bug. */
+.nav-mobile[hidden]{display:none}
 .nav-mobile a{padding:13px 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--line)}
 .nav-mobile .btn-solid{margin-top:16px;justify-content:center;border-bottom:0}
 
-/* ---------- Hero ---------- */
+/* ==========================================================================
+   HERO CAROUSEL
+   Sits below the white header, not underneath it.
+   ========================================================================== */
 .hero{
-  position:relative;min-height:min(88vh,760px);display:flex;align-items:center;
-  padding-top:var(--nav-h);overflow:hidden;
-  /* IMAGE SLOT 0: hero background. Replace with url("../assets/img/hero.jpg") center/cover */
-  background:
-    radial-gradient(120% 90% at 72% 22%,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 55%),
-    linear-gradient(180deg,#cfe4f4 0%,#dbeaf6 34%,#b9d3e8 62%,#8fb6d4 100%);
+  position:relative;margin-top:var(--nav-h);
+  height:min(78vh,660px);min-height:460px;
+  overflow:hidden;background:#cfe4f4;
 }
-.hero::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:44%;
-  background:linear-gradient(180deg,rgba(31,111,168,0) 0%,rgba(31,111,168,.20) 100%);
+.car-track{position:absolute;inset:0}
+
+.slide{
+  position:absolute;inset:0;
+  display:flex;align-items:center;
+  opacity:0;visibility:hidden;
+  transition:opacity .9s ease,visibility .9s ease;
+  background-position:center;background-size:cover;background-repeat:no-repeat;
+}
+.slide.is-active{opacity:1;visibility:visible}
+
+/* Hero images. Supplied at 1852x849, converted to progressive JPEG.
+   Replacements should keep the same 2.18 ratio and stay under 400KB. */
+.slide-1{background-image:url("../assets/img/hero-1.jpg")}
+.slide-2{background-image:url("../assets/img/hero-2.jpg")}
+.slide-3{background-image:url("../assets/img/hero-3.jpg")}
+.slide-4{background-image:url("../assets/img/hero-4.jpg")}
+
+/* Scrim. Keeps the headline legible over any photograph you supply,
+   including a dark one. Do not remove. */
+.slide::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.60) 36%,rgba(255,255,255,0) 66%);
   pointer-events:none;
 }
-.hero-in{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:40px;position:relative;z-index:2}
-.hero-copy{padding-block:clamp(48px,8vw,96px)}
-h1{font-size:clamp(40px,6vw,64px)}
-h1 .l1,h1 .l2{display:block}
-h1 .l2{color:var(--deep);font-style:italic}
-.hero-sub{margin-top:20px;font-size:15px;color:var(--ink-60)}
-.hero-actions{display:flex;align-items:center;gap:28px;margin-top:34px;flex-wrap:wrap}
+/* Right hand variant. Used where the subject of the photograph sits left. */
+.slide--right::before{
+  background:linear-gradient(270deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.60) 36%,rgba(255,255,255,0) 66%);
+}
+.slide--right .slide-in{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.slide--right .slide-actions{justify-content:flex-end}
 
-/* Signature: the water orb */
-.hero-art{position:relative;display:grid;place-items:center;min-height:380px}
-.orb{
-  position:relative;width:min(340px,64%);aspect-ratio:1;border-radius:50%;
-  background:
-    radial-gradient(60% 55% at 32% 26%,rgba(255,255,255,.92) 0%,rgba(255,255,255,0) 58%),
-    linear-gradient(150deg,rgba(255,255,255,.72) 0%,rgba(147,196,228,.55) 46%,rgba(31,111,168,.30) 100%);
-  box-shadow:0 30px 60px rgba(23,64,102,.28),inset 0 0 60px rgba(255,255,255,.5);
-  animation:float 9s ease-in-out infinite;
+.slide-in{position:relative;z-index:2;max-width:var(--wrap)}
+.slide-title{font-size:clamp(34px,4.6vw,54px);max-width:20ch}
+.slide-title .l1,.slide-title .l2{display:block}
+.slide-title .l2{color:var(--deep);font-style:italic}
+.slide-sub{margin-top:18px;font-size:15px;color:var(--ink-60);max-width:38ch}
+.slide-actions{display:flex;align-items:center;gap:28px;margin-top:32px;flex-wrap:wrap}
+
+/* Carousel controls */
+.car-nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  width:44px;height:44px;padding:11px;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.72);color:var(--deep);
+  transition:background .2s ease;
 }
-.orb-yin{
-  position:absolute;inset:11%;border-radius:50%;
-  background:linear-gradient(160deg,#2c6ea3 0%,#164971 55%,#0e3354 100%);
-  clip-path:polygon(50% 0,100% 0,100% 100%,50% 100%);
-  opacity:.92;
+.car-nav:hover{background:#fff}
+.car-prev{left:14px}
+.car-next{right:14px}
+
+.car-dots{
+  position:absolute;left:0;right:0;bottom:22px;z-index:5;
+  display:flex;justify-content:center;gap:10px;
 }
-.orb-yin::after{
-  content:"";position:absolute;left:-25%;top:25%;width:50%;aspect-ratio:1;border-radius:50%;
-  background:linear-gradient(160deg,#2c6ea3,#0e3354);
+.car-dots button{
+  width:9px;height:9px;padding:0;border:1px solid var(--deep);border-radius:50%;
+  background:transparent;cursor:pointer;transition:background .2s ease;
 }
-.orb-drop{
-  position:absolute;left:50%;top:22%;width:13%;aspect-ratio:.82;transform:translateX(-50%);
-  background:rgba(255,255,255,.9);
-  border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
-  clip-path:polygon(50% 0,100% 62%,82% 96%,18% 96%,0 62%);
-  box-shadow:0 4px 14px rgba(23,64,102,.25);
-}
-.orb-dot{
-  position:absolute;left:50%;bottom:24%;width:10%;aspect-ratio:1;border-radius:50%;
-  transform:translateX(-50%);background:#fff;
-}
-.orb-ripple{
-  position:absolute;bottom:14%;width:min(420px,78%);height:14px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(255,255,255,0));
-  filter:blur(2px);
-}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.car-dots button[aria-selected="true"]{background:var(--deep)}
 
 /* ---------- Strip ---------- */
 .strip{background:#fff;border-bottom:1px solid var(--line)}
@@ -191,7 +208,7 @@ h1 .l2{color:var(--deep);font-style:italic}
 /* ---------- Split ---------- */
 .split{display:grid;grid-template-columns:1fr 1fr;min-height:min(58vh,470px)}
 .split-media{
-  /* IMAGE SLOT 1 */
+  /* IMAGE SLOT 1: url("../assets/img/split.jpg") center/cover no-repeat */
   background:
     linear-gradient(200deg,rgba(255,255,255,.20),rgba(23,64,102,.35)),
     linear-gradient(160deg,#e6d9c4 0%,#b9cadb 45%,#3f6f97 100%);
@@ -202,7 +219,11 @@ h1 .l2{color:var(--deep);font-style:italic}
 .split-copy p{margin-top:18px;color:var(--ink-60);font-size:15px}
 .split-copy .btn-text{margin-top:26px}
 
-/* ---------- Elements ---------- */
+/* ---------- Elements ----------
+   Brand colour discs, matching the locked tokens and the Instagram grid.
+   To go photographic instead, replace each gradient with
+   url("../assets/img/el-wood.jpg") center/cover no-repeat.
+   Source at 400x400 minimum or they will look soft. */
 .elements{background:#fff}
 .el-in{
   display:grid;grid-template-columns:repeat(5,1fr);gap:20px;
@@ -227,14 +248,14 @@ h1 .l2{color:var(--deep);font-style:italic}
 /* ---------- Duo ---------- */
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line)}
 .duo-card{background:var(--pale);display:flex;flex-direction:column}
-.duo-media{aspect-ratio:16/9}
+.duo-media{aspect-ratio:16/9;background-position:center;background-size:cover}
 .duo-media-1{
-  /* IMAGE SLOT 2 */
-  background:linear-gradient(150deg,#f2ece2 0%,#cdd9e4 60%,#6f8ea9 100%);
+  /* IMAGE SLOT 2: url("../assets/img/duo-1.jpg") */
+  background-image:linear-gradient(150deg,#f2ece2 0%,#cdd9e4 60%,#6f8ea9 100%);
 }
 .duo-media-2{
-  /* IMAGE SLOT 3 */
-  background:linear-gradient(150deg,#f6f3ee 0%,#e2e7ea 55%,#a9b8c4 100%);
+  /* IMAGE SLOT 3: url("../assets/img/duo-2.jpg") */
+  background-image:linear-gradient(150deg,#f6f3ee 0%,#e2e7ea 55%,#a9b8c4 100%);
 }
 .duo-body{padding:clamp(24px,3.4vw,38px)}
 .duo-body h3{font-size:clamp(21px,2.4vw,26px)}
@@ -267,15 +288,34 @@ h1 .l2{color:var(--deep);font-style:italic}
 .faq-item.is-open .faq-a{grid-template-rows:1fr}
 .faq-item.is-open .faq-a > p{padding-bottom:20px}
 
-/* ---------- CTA ---------- */
+/* ---------- CTA and enquiry form ---------- */
 .cta{
-  position:relative;padding-block:clamp(64px,9vw,120px);
-  /* IMAGE SLOT 4 */
+  position:relative;padding-block:clamp(60px,8vw,104px);
+  /* IMAGE SLOT 4: url("../assets/img/cta.jpg") center/cover no-repeat */
   background:linear-gradient(180deg,#d4e4f0 0%,#a9c6dd 55%,#7ea7c7 100%);
 }
+.cta-in{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center;
+}
 .cta h2{font-size:clamp(28px,3.6vw,40px)}
-.cta p{margin-top:12px;color:var(--ink-60);font-size:15px}
-.cta .btn-solid{margin-top:28px}
+.cta-copy p{margin-top:12px;color:var(--ink-60);font-size:15px}
+
+.enq{background:rgba(255,255,255,.92);padding:clamp(24px,3.4vw,36px);border-radius:4px}
+.enq-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:block;margin-bottom:16px}
+.field span{
+  display:block;font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-60);margin-bottom:7px;
+}
+.field input,.field textarea{
+  width:100%;font-family:var(--body);font-size:15px;color:var(--ink);
+  padding:12px 14px;border:1px solid var(--line);border-radius:3px;background:#fff;
+}
+.field textarea{resize:vertical}
+.field input:focus,.field textarea:focus{outline:2px solid var(--deep);outline-offset:1px}
+.enq-note{margin-top:14px;font-size:11.5px;color:var(--ink-60);line-height:1.6}
+.hp{position:absolute;left:-9999px}
 
 /* ---------- Footer ---------- */
 .foot{background:#fff;border-top:1px solid var(--line);padding-block:30px 26px}
@@ -293,8 +333,13 @@ h1 .l2{color:var(--deep);font-style:italic}
 @media (max-width:960px){
   .nav-links,.nav-cta{display:none}
   .nav-toggle{display:block}
-  .hero-in{grid-template-columns:1fr}
-  .hero-art{order:-1;min-height:250px;padding-top:24px}
+  .hero{height:auto;min-height:0}
+  .car-track{position:relative;inset:auto}
+  .slide{position:absolute;inset:0}
+  .slide.is-active{position:relative;inset:auto}
+  .slide-in{padding-block:clamp(56px,12vw,88px)}
+  .slide::before{background:linear-gradient(180deg,rgba(255,255,255,.88) 0%,rgba(255,255,255,.66) 60%,rgba(255,255,255,.4) 100%)}
+  .car-nav{display:none}
   .strip-in{grid-template-columns:repeat(3,1fr);gap:26px 0}
   .strip-item:nth-child(3n){border-right:0}
   .split{grid-template-columns:1fr}
@@ -302,11 +347,13 @@ h1 .l2{color:var(--deep);font-style:italic}
   .el-in{grid-template-columns:repeat(3,1fr);gap:28px 16px}
   .duo{grid-template-columns:1fr}
   .faq-in{grid-template-columns:1fr}
+  .cta-in{grid-template-columns:1fr}
 }
 @media (max-width:560px){
   .strip-in{grid-template-columns:repeat(2,1fr)}
   .strip-item{border-right:0}
   .el-in{grid-template-columns:repeat(2,1fr)}
+  .enq-row{grid-template-columns:1fr}
   .foot-in{flex-direction:column;align-items:flex-start}
   .foot-links{margin-inline:0}
 }
