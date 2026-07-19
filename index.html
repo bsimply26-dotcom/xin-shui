@@ -56,12 +56,12 @@
 
   <!-- ======================================================================
        HERO CAROUSEL
-       Four slides. Images are IMAGE SLOTS 0a to 0d in css/styles.css.
-       All four headlines are final copy.
+       Five slides. Images are wired in css/styles.css, .slide-1 to .slide-5.
+       All five headlines are final copy.
        .slide--right moves the copy to the right hand side of the frame.
        It is on slide 1 only, because the figure in hero-1.jpg sits left.
-       To run three slides instead of four, delete one <article class="slide">
-       and its matching <button> in .car-dots.
+       Slide 5 uses hero-5.jpg, which is 16:9 rather than the 2.18:1 of the
+       other four. Its crop is tuned in override block v3, section 3.
        ====================================================================== -->
   <section class="hero" id="top" aria-label="Introduction" aria-roledescription="carousel">
 
@@ -119,6 +119,19 @@
         </div>
       </article>
 
+      <article class="slide slide-5" aria-hidden="true">
+        <div class="wrap slide-in">
+          <h1 class="slide-title">
+            <span class="l1">You already know your patterns.</span>
+            <span class="l2">You have never had the words for them.</span>
+          </h1>
+          <div class="slide-actions">
+            <a class="btn btn-solid" href="#practice">Explore the five elements</a>
+            <a class="btn btn-text" href="#about">Learn more <span class="arrow" aria-hidden="true"></span></a>
+          </div>
+        </div>
+      </article>
+
     </div>
 
     <button class="car-nav car-prev" aria-label="Previous slide">
@@ -133,64 +146,69 @@
       <button role="tab" aria-selected="false" aria-label="Slide 2"></button>
       <button role="tab" aria-selected="false" aria-label="Slide 3"></button>
       <button role="tab" aria-selected="false" aria-label="Slide 4"></button>
+      <button role="tab" aria-selected="false" aria-label="Slide 5"></button>
     </div>
 
   </section>
 
-  <!-- PILLAR STRIP -->
-  <section class="strip" aria-label="What the practice supports">
+  <!-- PILLAR STRIP
+       Labels describe what the profile covers. They do not describe a
+       result. Any replacement label must follow the same rule. -->
+  <section class="strip" aria-label="What the profile covers">
     <div class="wrap strip-in">
       <div class="strip-item">
         <span class="strip-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>
         </span>
-        <p>Understand<br>your nature</p>
+        <p>Your natural<br>strengths</p>
       </div>
       <div class="strip-item">
         <span class="strip-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M19 5c0 7.2-4.2 11-9.5 11H6"/><path d="M6 19c0-5 3.4-8.6 8-9.6"/></svg>
         </span>
-        <p>Live in<br>alignment</p>
+        <p>How you<br>work best</p>
       </div>
       <div class="strip-item">
         <span class="strip-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20c-4 0-7-2.4-7-5.4C5 12 7 11 9 11c0-3 1.4-5 3-7 1.6 2 3 4 3 7 2 0 4 1 4 3.6 0 3-3 5.4-7 5.4z"/></svg>
         </span>
-        <p>Release<br>inner noise</p>
+        <p>Your recurring<br>patterns</p>
       </div>
       <div class="strip-item">
         <span class="strip-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 11l8-6 8 6"/><path d="M6.5 10v9h11v-9"/></svg>
         </span>
-        <p>Create<br>supportive habits</p>
+        <p>Your daily<br>rhythms</p>
       </div>
       <div class="strip-item">
         <span class="strip-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 19.5S4.5 15 4.5 9.9A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7.5 1.9c0 5.1-7.5 9.6-7.5 9.6z"/></svg>
         </span>
-        <p>Find<br>balance</p>
+        <p>Where your<br>energy goes</p>
       </div>
     </div>
   </section>
 
-  <!-- SPLIT: CLEAR PATH -->
-  <section class="split" id="about">
-    <div class="split-media" role="img" aria-label="Still water at first light">
-      <!-- IMAGE SLOT 1: css/styles.css .split-media -->
-    </div>
-    <div class="split-copy">
-      <div class="split-copy-in">
+  <!-- CLEAR PATH
+       Image with the heading overlaid. The blue copy panel was removed.
+       The paragraph moved into Five Elements and the redundant Learn more
+       link was dropped. Note there is deliberately no role="img" here:
+       role="img" hides everything inside the element from screen readers,
+       which would hide the heading. -->
+  <section class="split">
+    <div class="split-media">
+      <div class="wrap split-overlay">
         <h2>A clear path to<br>self understanding.</h2>
-        <p>Explore your natural strengths, patterns and rhythms so you can move through daily life with greater clarity.</p>
-        <a class="btn btn-text" href="#practice">Learn more <span class="arrow" aria-hidden="true"></span></a>
       </div>
     </div>
   </section>
 
-  <!-- FIVE ELEMENTS -->
+  <!-- FIVE ELEMENTS
+       Carries id="about" since the split section no longer holds copy. -->
   <section class="elements" id="practice" aria-label="The Five Elements">
-    <div class="wrap el-head">
+    <div class="wrap el-head" id="about">
       <h2>Five elements.<br>Five ways of moving through the world.</h2>
+      <p class="el-intro">Explore your natural strengths, patterns and rhythms so you can move through daily life with greater clarity.</p>
     </div>
     <div class="wrap el-in">
       <a class="el" href="#contact">
@@ -224,17 +242,21 @@
     </div>
   </section>
 
-  <!-- TWO CARDS -->
+  <!-- SESSIONS
+       No duration figure appears anywhere in this section or in the FAQ.
+       Naming the shortest consultation first anchors the enquiry on it.
+       Length is settled at the enquiry stage instead. -->
   <section class="duo-sec" id="sessions">
     <div class="wrap duo-head">
       <h2>What to expect.</h2>
+      <p class="duo-intro">Two things. A written profile, and a private conversation about it.</p>
     </div>
     <div class="duo">
       <article class="duo-card">
         <div class="duo-media duo-media-1" role="img" aria-label="A quiet room in afternoon light"></div>
         <div class="duo-body">
           <h3>Inside a session.</h3>
-          <p>Ninety minutes, one written profile, a private conversation.</p>
+          <p>One written profile, one private conversation, prepared in advance and unhurried.</p>
           <a class="btn btn-text" href="#faq">See how it works <span class="arrow" aria-hidden="true"></span></a>
         </div>
       </article>
@@ -269,7 +291,7 @@
           <button class="faq-q" aria-expanded="false">
             <span>How does a session work?</span><span class="faq-sign" aria-hidden="true"></span>
           </button>
-          <div class="faq-a"><p>You share your date and time of birth before we meet. Your practitioner prepares a written profile, then walks you through it in a private ninety minute conversation. You leave with the written profile and a short set of practices to try.</p></div>
+          <div class="faq-a"><p>You share your date and time of birth before we meet. Your practitioner prepares a written profile, then walks you through it in a private conversation. You leave with the written profile and a short set of practices to try. Several formats are available, and we will help you choose one when you enquire.</p></div>
         </div>
 
         <div class="faq-item">
