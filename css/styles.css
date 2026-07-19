@@ -708,15 +708,15 @@ svg{width:100%;height:100%}
      mask on a scroll container breaks scrolling in Safari. */
   .strip-in{
     display:flex;
+    flex-wrap:nowrap;
     grid-template-columns:none;
     gap:0;
     padding-block:26px 24px;
     padding-inline:0;
-    overflow-x:auto;
+    overflow-x:scroll;
     overflow-y:hidden;
-    overscroll-behavior-x:contain;
-    scroll-snap-type:x proximity;
     -webkit-overflow-scrolling:touch;
+    touch-action:pan-x;
     scrollbar-width:none;
   }
   .strip-in::-webkit-scrollbar{display:none}
@@ -731,9 +731,9 @@ svg{width:100%;height:100%}
     background-image:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.92));
   }
 
-  .strip-item{
-    flex:0 0 40%;
-    scroll-snap-align:start;
+ .strip-item{
+    flex:0 0 150px;
+    min-width:150px;
     gap:10px;
     padding-inline:12px;
     border-right:1px solid var(--line);
