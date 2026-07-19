@@ -328,13 +328,13 @@
       </div>
 
       <!-- ==================================================================
-           NETLIFY FORM
-           Submissions appear in the Netlify dashboard under Forms.
-           Set the notification address in Site configuration, Notifications.
-           Nothing here needs an email address.
+          ENQUIRY FORM
+       Posts to enquiry.php, which sends by authenticated SMTP through
+       the Hostinger mailbox and redirects to thanks.html.
+       Credentials live in xinshui-config.php, one level ABOVE
+       public_html, and are deliberately not in this repository.
            ================================================================== -->
-      <form class="enq" name="enquiry" method="POST" data-netlify="true" netlify-honeypot="company" action="/thanks.html">
-        <input type="hidden" name="form-name" value="enquiry">
+      <form class="enq" name="enquiry" method="POST" action="/enquiry.php">
         <p class="hp"><label>Do not fill this in <input name="company" tabindex="-1" autocomplete="off"></label></p>
 
         <div class="enq-row">
