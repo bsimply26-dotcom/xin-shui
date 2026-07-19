@@ -579,3 +579,279 @@ svg{width:100%;height:100%}
   .slide-title{font-size:26px}
   .split-copy h2,.faq-head h2,.cta h2{font-size:24px}
 }
+/* ==========================================================================
+   XIN SHUI - OVERRIDE BLOCK v2
+   Replaces v1 entirely. If v1 is already in css/styles.css, delete it first
+   and paste this in its place. Do not run both.
+
+   Append to the END of css/styles.css. Nothing above that point is modified.
+   Longhand properties only, except the two duo image swaps which are
+   deliberate and are marked.
+
+   Contents:
+     1. Element discs, veiled photograph with character overlay
+     2. Element heading, descriptors and closing link
+     3. Sessions section heading, and duo image swap
+     4. Logo lockup with tagline
+     5. Pillar strip, horizontal scroll on mobile
+     6. Five elements, single row on mobile
+     7. Vertical spacing compression on mobile
+     8. CTA background crop
+     9. Footer compression
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. ELEMENT DISCS
+   TUNE: --el-veil is the white veil strength. Higher is paler and pushes
+   the character forward. 0.62 is confirmed good on device.
+   ========================================================================== */
+:root{ --el-veil:.62; }
+
+.el-disc{
+  position:relative;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.el-disc::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-color:rgba(255,255,255,var(--el-veil));
+  border-radius:50%;
+  transition:background-color .35s ease;
+}
+.el-disc::after{
+  position:relative;
+  z-index:1;
+  font-family:var(--cjk);
+  font-weight:500;
+  font-size:clamp(42px,5.2vw,58px);
+  line-height:1;
+  letter-spacing:0;
+  transition:transform .35s ease;
+}
+.el:hover .el-disc::before{ background-color:rgba(255,255,255,calc(var(--el-veil) - .10)); }
+.el:hover .el-disc::after{ transform:scale(1.04); }
+
+.el-wood::after { content:"\6728"; color:var(--wood);  }
+.el-fire::after { content:"\706B"; color:var(--fire);  }
+.el-earth::after{ content:"\571F"; color:var(--earth); }
+.el-metal::after{ content:"\91D1"; color:var(--metal); }
+.el-water::after{ content:"\6C34"; color:var(--water); }
+
+
+/* ==========================================================================
+   2. ELEMENT SECTION HEADING, DESCRIPTORS AND CLOSING LINK
+   ========================================================================== */
+.el-head{padding-top:clamp(40px,5.5vw,62px)}
+.el-head h2{font-size:clamp(24px,3vw,34px);max-width:22ch}
+.elements .el-in{padding-block:clamp(26px,3.4vw,40px)}
+.el-foot{padding-bottom:clamp(40px,5.5vw,62px)}
+
+.el-desc{
+  font-family:var(--display);
+  font-size:clamp(13px,1.4vw,16px);
+  line-height:1.25;
+  color:var(--ink-60);
+  text-align:center;
+  max-width:16ch;
+}
+.el{gap:12px}
+.el .el-name{margin-bottom:-4px}
+
+
+/* ==========================================================================
+   3. SESSIONS SECTION
+   The two photographs are swapped. The still life now carries "Inside a
+   session" and the figure carries "Who tends to come". If your filenames
+   differ from the ones below, correct the two url values only.
+   ========================================================================== */
+.duo-sec{background:#fff}
+.duo-head{padding-block:clamp(40px,5.5vw,62px) clamp(20px,2.6vw,30px)}
+.duo-head h2{font-size:clamp(24px,3vw,34px)}
+
+.duo-media-1{background-image:url("../assets/img/duo-2.jpg")}
+.duo-media-2{background-image:url("../assets/img/duo-1.jpg")}
+
+
+/* ==========================================================================
+   4. LOGO LOCKUP WITH TAGLINE
+   ========================================================================== */
+.brand-text{display:flex;flex-direction:column;justify-content:center}
+.brand-tag{
+  font-family:var(--body);font-size:8.5px;font-weight:500;
+  letter-spacing:.30em;text-transform:uppercase;color:var(--deep);
+  margin-top:4px;white-space:nowrap;
+}
+.foot .brand{flex-direction:column;align-items:center;gap:9px;text-align:center}
+.foot .brand-mark{width:44px;height:44px}
+.foot .brand-rule{width:26px;height:1px;background:var(--mid);margin-top:8px}
+.foot .brand-tag{font-size:9px;margin-top:8px}
+
+@media (max-width:420px){
+  .brand-mark{width:32px;height:32px}
+  .brand-name{font-size:16px;letter-spacing:.18em}
+  .brand-tag{font-size:7.5px;letter-spacing:.24em}
+}
+
+
+/* ==========================================================================
+   5. MOBILE, 700px and below
+   ========================================================================== */
+@media (max-width:700px){
+
+  /* Pillar strip, horizontal scroll. Items are 40% of the viewport so two
+     and a half are visible. The half item plus the fade is the swipe cue.
+     The fade lives on the parent, not on the scroll container, because a
+     mask on a scroll container breaks scrolling in Safari. */
+  .strip-in{
+    display:flex;
+    grid-template-columns:none;
+    gap:0;
+    padding-block:26px 24px;
+    padding-inline:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .strip-in::-webkit-scrollbar{display:none}
+
+  .strip{position:relative}
+  .strip::after{
+    content:"";
+    position:absolute;
+    top:0;right:0;bottom:0;
+    width:52px;
+    pointer-events:none;
+    background-image:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.92));
+  }
+
+  .strip-item{
+    flex:0 0 40%;
+    scroll-snap-align:start;
+    gap:10px;
+    padding-inline:12px;
+    border-right:1px solid var(--line);
+  }
+  .strip-item:first-child{margin-left:var(--pad)}
+  .strip-item:last-child{margin-right:var(--pad);border-right:0}
+  .strip-item:nth-child(3n){border-right:1px solid var(--line)}
+  .strip-icon{width:38px;height:38px;padding:9px}
+  .strip-item p{font-size:15px;line-height:1.3}
+}
+
+
+/* ==========================================================================
+   6. MOBILE, 560px and below
+   ========================================================================== */
+@media (max-width:560px){
+
+  /* ---------- Hero ---------- */
+  .slide-in{padding-block:46px 42px}
+  .slide-title{font-size:clamp(27px,7.4vw,34px);max-width:20ch}
+  .slide-actions{gap:16px;margin-top:22px;flex-direction:column;align-items:flex-start}
+  .slide--right .slide-actions{align-items:flex-end}
+  .car-dots{bottom:16px}
+
+  /* ---------- Five elements, one row ---------- */
+  .el-head{padding-top:34px}
+  .el-head h2{font-size:22px;max-width:none}
+  .elements .el-in{
+    grid-template-columns:repeat(5,1fr);
+    gap:0 6px;
+    padding-block:20px 18px;
+  }
+  .el{gap:8px}
+  .el-disc{
+    width:100%;
+    box-shadow:0 5px 12px rgba(23,64,102,.12);
+  }
+  .el-disc::after{font-size:31px}
+  .el-name{font-size:8.5px;letter-spacing:.10em;margin-bottom:-5px}
+  .el-desc{font-size:11.5px;line-height:1.22;max-width:none}
+  .el-foot{padding-bottom:34px}
+
+  /* ---------- Split ---------- */
+  .split{min-height:0}
+  .split-media{min-height:190px}
+  .split-copy-in{padding:30px var(--pad) 32px;max-width:none}
+  .split-copy h2{font-size:26px}
+  .split-copy p{margin-top:12px;font-size:14.5px}
+  .split-copy .btn-text{margin-top:18px}
+
+  /* ---------- Sessions ---------- */
+  .duo-head{padding-block:34px 16px}
+  .duo-head h2{font-size:24px}
+  .duo-media{aspect-ratio:5/3}
+  .duo-body{padding:22px var(--pad) 26px}
+  .duo-body h3{font-size:21px}
+  .duo-body p{margin-top:6px}
+  .duo-body .btn-text{margin-top:14px}
+
+  /* ---------- FAQ ---------- */
+  .faq{padding-block:44px 46px}
+  .faq-in{gap:22px}
+  .faq-head h2{font-size:26px}
+  .faq-head .btn-text{margin-top:16px}
+  .faq-q{padding:15px 0;font-size:13.5px}
+  .faq-item.is-open .faq-a > p{padding-bottom:16px}
+
+  /* ---------- CTA and form ----------
+     The stone cairn sits at 76 percent across cta.jpg. The image is 3:1, so
+     on a portrait section it scales by height and the whole vertical range
+     is always visible. Only the horizontal value does anything here.
+     TUNE: lower pushes the stones right and clear of the form card,
+     higher pulls them central and further behind it. */
+  .cta{
+    padding-block:42px 46px;
+    background-position:74% center;
+  }
+  .cta-in{gap:22px}
+  .cta h2{font-size:26px}
+  .cta-copy p{margin-top:8px;font-size:14.5px}
+  .enq{padding:20px 18px}
+  .field{margin-bottom:14px}
+  .field input,.field textarea{padding:11px 12px;font-size:16px}
+  .enq-note{margin-top:12px}
+
+  /* ---------- Footer ---------- */
+  .foot{padding-block:26px 22px}
+  .foot-in{
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    text-align:center;
+  }
+  .foot-links{
+    margin-inline:0;
+    justify-content:center;
+    gap:10px 18px;
+  }
+  .foot-links a{font-size:10px;letter-spacing:.12em}
+  .foot-social{justify-content:center}
+  .foot-legal{margin-top:18px;padding-top:16px;text-align:center}
+  .foot-legal .tagline{display:none}
+  .fineprint{font-size:10.5px;line-height:1.55}
+  .copy{margin-top:6px;font-size:10.5px}
+}
+
+
+/* ==========================================================================
+   7. NARROW MOBILE, 400px and below
+   ========================================================================== */
+@media (max-width:400px){
+  .strip-item{flex:0 0 44%}
+  .strip-item p{font-size:14px}
+  .elements .el-in{gap:0 4px}
+  .el-disc::after{font-size:28px}
+  .el-name{font-size:8px;letter-spacing:.06em}
+  .el-desc{font-size:10.5px}
+  .slide-title{font-size:26px}
+  .split-copy h2,.faq-head h2,.cta h2,.duo-head h2{font-size:23px}
+  .el-head h2{font-size:21px}
+}
