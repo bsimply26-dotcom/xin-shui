@@ -60,7 +60,7 @@
     var index = 0;
     var timer = null;
     var stopped = false;
-    var DELAY = 6500;
+    var DELAY = 3000;
 
     var reduce = window.matchMedia &&
                  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
