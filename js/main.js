@@ -72,6 +72,12 @@
       dots.forEach(function (d, n) {
         d.setAttribute('aria-selected', String(n === index));
       });
+
+      /* Advance the pillar strip on the same beat as the carousel.
+         Driving it from here rather than from a second timer means the
+         two can never drift apart, including after pauses, hover and
+         tab switches. */
+      if (typeof window.xsStripStep === 'function') { window.xsStripStep(); }
     }
     function start() {
       if (stopped || reduce || slides.length < 2) return;
@@ -104,62 +110,48 @@
     start();
   }
 
-  /* ---------- Pillar strip auto scroll ----------
-     Advances one item every 3.5 seconds and loops back to the start.
+  /* ---------- Pillar strip, driven by the carousel ----------
+     The strip has no timer of its own. The carousel calls
+     window.xsStripStep on every slide change, so the strip and the
+     banner move together and cannot drift apart.
+
      Stops permanently the first time the visitor touches or scrolls it,
-     so it never fights them. Runs at 700px and below only, and only when
-     the row actually overflows. Disabled under reduced motion.
+     so it never fights them. Runs at 700px and below only, and only
+     when the row actually overflows. Disabled under reduced motion.
 
      This also serves as a diagnostic for the swipe fault. Programmatic
-     scrolling is not blocked by a CSS mask, but touch scrolling is. If the
-     strip auto scrolls and still will not swipe, a mask is still reaching
-     the scroll container and override block v1 has not been removed.
-
-     TUNE: STRIP_DELAY is the interval in milliseconds. */
+     scrolling is not blocked by a CSS mask, but touch scrolling is. If
+     the strip steps along and still will not swipe, a mask is still
+     reaching the scroll container. */
   var strip = document.querySelector('.strip-in');
   if (strip) {
-    var stripTimer = null;
     var stripStopped = false;
-    var STRIP_DELAY = 3500;
     var stripReduce = window.matchMedia &&
                       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function stripCanRun() {
-      return !stripStopped && !stripReduce &&
-             window.matchMedia('(max-width:700px)').matches &&
-             strip.scrollWidth > strip.clientWidth + 4;
-    }
-    function stripStep() {
+    window.xsStripStep = function () {
+      if (stripStopped || stripReduce) { return; }
+      if (!window.matchMedia('(max-width:700px)').matches) { return; }
+      if (strip.scrollWidth <= strip.clientWidth + 4) { return; }
+
       var item = strip.querySelector('.strip-item');
-      if (!item) return;
+      if (!item) { return; }
       var step = item.getBoundingClientRect().width;
       var max = strip.scrollWidth - strip.clientWidth;
       var target = strip.scrollLeft + step;
-      if (target > max - 4) target = 0;
+      if (target > max - 4) { target = 0; }
+
       if (strip.scrollTo) {
         strip.scrollTo({ left: target, behavior: 'smooth' });
       } else {
         strip.scrollLeft = target;
       }
-    }
-    function stripStop() {
-      if (stripTimer) { window.clearInterval(stripTimer); stripTimer = null; }
-    }
-    function stripStart() {
-      stripStop();
-      if (!stripCanRun()) return;
-      stripTimer = window.setInterval(stripStep, STRIP_DELAY);
-    }
-    function stripHalt() { stripStopped = true; stripStop(); }
+    };
 
+    function stripHalt() { stripStopped = true; }
     strip.addEventListener('touchstart', stripHalt, { passive: true });
     strip.addEventListener('pointerdown', stripHalt);
     strip.addEventListener('wheel', stripHalt, { passive: true });
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { stripStop(); } else { stripStart(); }
-    });
-    window.addEventListener('resize', stripStart);
-    stripStart();
   }
 
   /* ---------- Footer year ---------- */
