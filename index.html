@@ -56,18 +56,32 @@
 
   <!-- ======================================================================
        HERO CAROUSEL
-       Five slides. Images are wired in css/styles.css, .slide-1 to .slide-5.
+       Five slides. The first is .slide-sphere, wired to hero-sphere.jpg.
+       The other four are .slide-1 to .slide-4, unchanged.
        All five headlines are final copy.
        .slide--right moves the copy to the right hand side of the frame.
-       It is on slide 1 only, because the figure in hero-1.jpg sits left.
-       Slide 5 uses hero-5.jpg, which is 16:9 rather than the 2.18:1 of the
-       other four. Its crop is tuned in override block v3, section 3.
+       It is on .slide-1 only, because the figure in hero-1.jpg sits left.
+       hero-sphere.jpg is 16:9 rather than the 2.18:1 of the other four, so
+       it crops harder. Its position is tuned in override block v4, part 1.
        ====================================================================== -->
   <section class="hero" id="top" aria-label="Introduction" aria-roledescription="carousel">
 
     <div class="car-track">
 
-      <article class="slide slide--right is-active slide-1" aria-hidden="false">
+      <article class="slide slide-sphere is-active" aria-hidden="false">
+        <div class="wrap slide-in">
+          <h1 class="slide-title">
+            <span class="l1">You already know your patterns.</span>
+            <span class="l2">You have never had the words for them.</span>
+          </h1>
+          <div class="slide-actions">
+            <a class="btn btn-solid" href="#practice">Explore the five elements</a>
+            <a class="btn btn-text" href="#about">Learn more <span class="arrow" aria-hidden="true"></span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="slide slide--right slide-1" aria-hidden="true">
         <div class="wrap slide-in">
           <h1 class="slide-title">
             <span class="l1">What if you're not lost,</span>
@@ -111,19 +125,6 @@
           <h1 class="slide-title">
             <span class="l1">Before your next decision,</span>
             <span class="l2">understand the person making it.</span>
-          </h1>
-          <div class="slide-actions">
-            <a class="btn btn-solid" href="#practice">Explore the five elements</a>
-            <a class="btn btn-text" href="#about">Learn more <span class="arrow" aria-hidden="true"></span></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="slide slide-5" aria-hidden="true">
-        <div class="wrap slide-in">
-          <h1 class="slide-title">
-            <span class="l1">You already know your patterns.</span>
-            <span class="l2">You have never had the words for them.</span>
           </h1>
           <div class="slide-actions">
             <a class="btn btn-solid" href="#practice">Explore the five elements</a>
@@ -248,7 +249,7 @@
        Length is settled at the enquiry stage instead. -->
   <section class="duo-sec" id="sessions">
     <div class="wrap duo-head">
-      <h2>What to expect.</h2>
+      <h2>Clearer about yourself.<br>Steadier in what you choose.</h2>
       <p class="duo-intro">Two things. A written profile, and a private conversation about it.</p>
     </div>
     <div class="duo">
@@ -263,7 +264,7 @@
       <article class="duo-card">
         <div class="duo-media duo-media-2" role="img" aria-label="A person in reflection by still water"></div>
         <div class="duo-body">
-          <h3>Who tends to come.</h3>
+          <h3>Who this is for.</h3>
           <p>People at a turning point who want clearer language for themselves.</p>
           <a class="btn btn-text" href="#contact">Start a conversation <span class="arrow" aria-hidden="true"></span></a>
         </div>
@@ -328,13 +329,13 @@
       </div>
 
       <!-- ==================================================================
-          ENQUIRY FORM
-       Posts to enquiry.php, which sends by authenticated SMTP through
-       the Hostinger mailbox and redirects to thanks.html.
-       Credentials live in xinshui-config.php, one level ABOVE
-       public_html, and are deliberately not in this repository.
+           NETLIFY FORM
+           Submissions appear in the Netlify dashboard under Forms.
+           Set the notification address in Site configuration, Notifications.
+           Nothing here needs an email address.
            ================================================================== -->
-      <form class="enq" name="enquiry" method="POST" action="/enquiry.php">
+      <form class="enq" name="enquiry" method="POST" data-netlify="true" netlify-honeypot="company" action="/thanks.html">
+        <input type="hidden" name="form-name" value="enquiry">
         <p class="hp"><label>Do not fill this in <input name="company" tabindex="-1" autocomplete="off"></label></p>
 
         <div class="enq-row">
