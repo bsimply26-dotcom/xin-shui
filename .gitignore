@@ -2,3 +2,5 @@
 node_modules/
 .netlify/
 *.log
+xinshui-config.php
+xinshui-enquiries.log
