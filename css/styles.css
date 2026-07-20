@@ -1080,3 +1080,99 @@ svg{width:100%;height:100%}
 @media (max-width:420px){
   .brand-text{gap:4px}
 }
+
+
+/* ==========================================================================
+   3. BANNER SCRIMS, LIGHTER ON MOBILE
+
+   All three banners carry a white wash over a photograph. Every one of
+   them is set in percentages, and percentages behave differently on a
+   narrow screen than on a wide one. On desktop the far end of each
+   gradient sits over a large area of untouched photograph. On a phone
+   the same percentages cover almost the whole visible crop, so the
+   image reads flat and washed out. Same rule, opposite result.
+
+   Everything below applies at 700px and under. Desktop is untouched.
+
+   TUNE: each banner has three values, near edge, middle and far edge.
+   Raise them toward the desktop figures if a heading becomes hard to
+   read. Lower them for more photograph. Always change the three
+   together, or a visible band develops where the fade steps.
+   ========================================================================== */
+
+@media (max-width:700px){
+
+  /* ---------- Hero, five slides ----------
+     Desktop is .86 / .60 at 36 percent / clear at 66 percent.
+     Both the standard and the reversed variant are treated, so slide
+     one stays consistent with the other four. */
+  .slide::before{
+    background-image:linear-gradient(
+      90deg,
+      rgba(255,255,255,.68) 0%,
+      rgba(255,255,255,.36) 30%,
+      rgba(255,255,255,0) 56%
+    );
+  }
+  .slide--right::before{
+    background-image:linear-gradient(
+      270deg,
+      rgba(255,255,255,.68) 0%,
+      rgba(255,255,255,.36) 30%,
+      rgba(255,255,255,0) 56%
+    );
+  }
+
+  /* ---------- Split, a clear path ----------
+     Set in override block v4 section 2 as a vertical wash that never
+     reaches clear, bottoming out at .30. That floor is most of why
+     this section reads flatter than desktop. */
+  .split-media::before{
+    background-image:linear-gradient(
+      180deg,
+      rgba(255,255,255,.78) 0%,
+      rgba(255,255,255,.46) 58%,
+      rgba(255,255,255,.14) 100%
+    );
+  }
+
+  /* ---------- CTA, stone cairn ----------
+     Deliberately gentler than the other two. The heading and the line
+     beneath it sit directly on the photograph, with no card behind
+     them, unlike the enquiry form which carries its own white panel.
+     This is the one to watch when testing. */
+  .cta::before{
+    background-image:linear-gradient(
+      90deg,
+      rgba(255,255,255,.58) 0%,
+      rgba(255,255,255,.30) 50%,
+      rgba(255,255,255,.14) 100%
+    );
+  }
+}
+
+
+/* ==========================================================================
+   4. HERO HEADLINE, SMALLER ON MOBILE
+
+   Type comes down and the measure tightens with it, so the shorter
+   line length does not push the longest headline into five lines.
+
+   TUNE: the two font sizes below. If a headline overflows the slide,
+   the floor set in override block v3 section 2 is what holds the
+   height, not this rule.
+   ========================================================================== */
+@media (max-width:560px){
+  .slide-title{
+    font-size:clamp(23px,6.4vw,29px);
+    max-width:17ch;
+  }
+  .slide-actions{margin-top:20px}
+}
+
+@media (max-width:400px){
+  .slide-title{
+    font-size:22px;
+    max-width:16ch;
+  }
+}
