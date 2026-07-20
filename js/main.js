@@ -159,3 +159,34 @@
   if (year) year.textContent = new Date().getFullYear();
 
 })();
+
+
+/* Back to top. Appears once the visitor is past roughly one screen.
+   The hidden attribute is toggled rather than display, so the button
+   is out of the tab order entirely when it is not on screen. */
+(function () {
+  var btn = document.getElementById('totop');
+  if (!btn) return;
+
+  var shown = false;
+
+  function check() {
+    var past = window.scrollY > window.innerHeight * 0.9;
+    if (past === shown) return;
+    shown = past;
+    if (past) {
+      btn.hidden = false;
+      requestAnimationFrame(function () { btn.classList.add('is-on'); });
+    } else {
+      btn.classList.remove('is-on');
+      setTimeout(function () { if (!shown) { btn.hidden = true; } }, 260);
+    }
+  }
+
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', check, { passive: true });
+  check();
+})();
