@@ -67,6 +67,8 @@ function clean(string $v, int $max): string {
 
 $name    = clean((string)($_POST['name'] ?? ''), 120);
 $email   = clean((string)($_POST['email'] ?? ''), 200);
+$phone   = clean((string)($_POST['phone'] ?? ''), 40);
+$phoneD  = $phone !== '' ? $phone : 'Not given';
 $message = trim((string)($_POST['message'] ?? ''));
 $message = mb_substr($message, 0, 5000);
 
@@ -99,6 +101,7 @@ $plain = "New enquiry from the Xin Shui website\n"
        . str_repeat('-', 46) . "\n\n"
        . "Name:    {$name}\n"
        . "Email:   {$email}\n"
+       . "Phone:   {$phoneD}\n"
        . "Time:    {$when}\n\n"
        . "Message:\n"
        . ($message !== '' ? $message : '(no message given)') . "\n\n"
@@ -110,7 +113,8 @@ $html = '<div style="font-family:Inter,Arial,sans-serif;font-size:15px;color:#1C
       . '<table cellpadding="0" cellspacing="0" style="font-size:15px">'
       . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Name</td><td>' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</td></tr>'
       . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Email</td><td><a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a></td></tr>'
-      . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Time</td><td>' . htmlspecialchars($when, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+     . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Phone</td><td>' . htmlspecialchars($phoneD, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+   . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Time</td><td>' . htmlspecialchars($when, ENT_QUOTES, 'UTF-8') . '</td></tr>'
       . '</table>'
       . '<p style="margin:20px 0 6px;color:#5b6875;font-size:13px">Message</p>'
       . '<div style="background:#EAF5FB;padding:16px 18px;border-radius:4px;white-space:pre-wrap">'
