@@ -946,3 +946,79 @@ svg{width:100%;height:100%}
 @media (max-width:400px){
   .duo-head h2{font-size:21px}
 }
+
+
+/* ==========================================================================
+   XIN SHUI - OVERRIDE BLOCK v5
+   APPEND to the very END of css/styles.css, after override block v4.
+   v5 ADDS TO v4. It does NOT replace v4. All earlier blocks must remain.
+
+   DO NOT replace css/styles.css from any file outside the repository.
+   Every copy outside the repository is missing image references and
+   overwriting the file would strip the photographs off the site.
+
+   Longhand properties only. The background shorthand is never used here,
+   so every image URL declared earlier in this file survives.
+
+   Contents:
+     1. Back to top button
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. BACK TO TOP BUTTON
+
+   Appears once the visitor is one screen down. The script toggles the
+   hidden attribute, so the rule below must restore display:none for it.
+   Without that line the display value here would override the browser
+   default and the button would never hide.
+
+   TUNE: --totop-gap is the clearance from the bottom and right edges.
+   ========================================================================== */
+:root{ --totop-gap:16px; }
+
+.totop{
+  position:fixed;
+  right:var(--totop-gap);
+  bottom:var(--totop-gap);
+  z-index:40;
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  padding:11px;
+  border:0;
+  border-radius:50%;
+  cursor:pointer;
+  background-color:var(--deep);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(23,64,102,.24);
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity .26s ease,transform .26s ease,background-color .2s ease;
+}
+
+.totop[hidden]{display:none}
+
+.totop.is-on{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.totop:hover{background-color:var(--mid)}
+
+.totop:focus-visible{
+  outline:2px solid var(--deep);
+  outline-offset:3px;
+}
+
+.totop svg{width:100%;height:100%}
+
+@media (max-width:560px){
+  :root{ --totop-gap:14px; }
+  .totop{width:40px;height:40px;padding:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .totop{transition:opacity .01s linear}
+}
