@@ -1022,3 +1022,61 @@ svg{width:100%;height:100%}
 @media (prefers-reduced-motion:reduce){
   .totop{transition:opacity .01s linear}
 }
+
+
+/* ==========================================================================
+   2. BRAND LOCKUP, OPTICAL CENTRING
+
+   The mark and the text block were centred as boxes, not as ink. Two
+   causes, both corrected here.
+
+   a. The name inherited body line height, which puts leading above and
+      below the glyphs. The box counts that space. The eye does not, so
+      the mark read low against the name.
+   b. The tagline was pushed down by margin-top, which grew the box
+      downward and moved its centre below the optical centre.
+
+   Line height is set to 1 on both lines so each box matches its ink,
+   and the space between them is set by gap instead of by margin.
+
+   The negative right margins set in override block v3 are deliberately
+   left alone. They cancel trailing letter spacing and are unrelated.
+
+   TUNE: --brand-nudge is the last resort adjustment. Positive values
+   move the text block DOWN relative to the mark, negative moves it UP.
+   Change in steps of 0.5px. Leave at 0 if the lockup already reads
+   level after the line height correction.
+   ========================================================================== */
+:root{ --brand-nudge:0px; }
+
+.brand{align-items:center}
+
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  transform:translateY(var(--brand-nudge));
+}
+
+.brand-text .brand-name{
+  line-height:1;
+  margin-top:0;
+  margin-bottom:0;
+}
+
+.brand-text .brand-tag{
+  line-height:1;
+  margin-top:0;
+  margin-bottom:0;
+}
+
+/* The footer lockup stacks vertically and is centred by its own rules,
+   so it takes the line height correction but not the nudge. */
+.foot .brand-text{transform:none}
+.foot .brand-name{line-height:1}
+.foot .brand-tag{line-height:1;margin-top:0}
+
+@media (max-width:420px){
+  .brand-text{gap:4px}
+}
