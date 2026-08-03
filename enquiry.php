@@ -72,9 +72,12 @@ $phoneD  = $phone !== '' ? $phone : 'Not given';
 $message = trim((string)($_POST['message'] ?? ''));
 $message = mb_substr($message, 0, 5000);
 
+$accepted = isset($_POST['accept']);
+
 $errors = [];
 if ($name === '')                                        { $errors[] = 'name'; }
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) { $errors[] = 'email'; }
+if (!$accepted)                                          { $errors[] = 'accept'; }
 
 if ($errors) {
     header('Location: /?err=' . implode(',', $errors) . '#contact');
@@ -102,7 +105,8 @@ $plain = "New enquiry from the Xin Shui website\n"
        . "Name:    {$name}\n"
        . "Email:   {$email}\n"
        . "Phone:   {$phoneD}\n"
-       . "Time:    {$when}\n\n"
+       . "Time:    {$when}\n"
+       . "Accepted: Terms of Service and Privacy Notice, at submission ({$when})\n\n"
        . "Message:\n"
        . ($message !== '' ? $message : '(no message given)') . "\n\n"
        . str_repeat('-', 46) . "\n"
@@ -114,7 +118,8 @@ $html = '<div style="font-family:Inter,Arial,sans-serif;font-size:15px;color:#1C
       . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Name</td><td>' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</td></tr>'
       . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Email</td><td><a href="mailto:' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</a></td></tr>'
      . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Phone</td><td>' . htmlspecialchars($phoneD, ENT_QUOTES, 'UTF-8') . '</td></tr>'
-   . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Time</td><td>' . htmlspecialchars($when, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+. '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Time</td><td>' . htmlspecialchars($when, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+      . '<tr><td style="padding:3px 18px 3px 0;color:#5b6875">Accepted</td><td>Terms of Service and Privacy Notice</td></tr>'
       . '</table>'
       . '<p style="margin:20px 0 6px;color:#5b6875;font-size:13px">Message</p>'
       . '<div style="background:#EAF5FB;padding:16px 18px;border-radius:4px;white-space:pre-wrap">'
