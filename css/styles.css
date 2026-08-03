@@ -1263,3 +1263,65 @@ svg{width:100%;height:100%}
 @media (max-width:560px){
   .foot-legal-links{justify-content:center}
 }
+
+/* ==========================================================================
+   XIN SHUI - OVERRIDE BLOCK v7
+   APPEND to the very END of css/styles.css, after override block v6.
+   v7 ADDS TO v6. It does NOT replace v6. All earlier blocks must remain.
+
+   DO NOT replace css/styles.css from any file outside the repository.
+   Every copy outside the repository is missing image references and
+   overwriting the file would strip the photographs off the site.
+
+   Longhand properties only.
+
+   Contents:
+     1. Enquiry form acceptance row
+     2. Enquiry note link
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. ENQUIRY FORM ACCEPTANCE ROW
+   The required checkbox by which a visitor confirms they accept the Terms
+   and the Privacy Notice before sending an enquiry.
+   ========================================================================== */
+.enq-accept{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:12px;
+  margin-bottom:14px;
+  background:var(--pale);
+  border-radius:6px;
+}
+.enq-accept input[type="checkbox"]{
+  flex:0 0 auto;
+  width:16px;
+  height:16px;
+  margin-top:2px;
+  accent-color:var(--deep);
+  cursor:pointer;
+}
+.enq-accept-text{
+  font-size:12px;
+  line-height:1.5;
+  color:var(--ink);
+}
+.enq-accept a{
+  color:var(--deep);
+  border-bottom:1px solid var(--deep);
+}
+.enq-accept a:hover{color:var(--ink)}
+
+
+/* ==========================================================================
+   2. ENQUIRY NOTE LINK
+   The reworded confidence line now points to the Privacy Notice, so the
+   link needs to read as a link.
+   ========================================================================== */
+.enq-note a{
+  color:var(--deep);
+  border-bottom:1px solid var(--deep);
+}
+.enq-note a:hover{color:var(--ink)}
