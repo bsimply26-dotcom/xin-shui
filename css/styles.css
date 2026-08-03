@@ -1176,3 +1176,90 @@ svg{width:100%;height:100%}
     max-width:16ch;
   }
 }
+
+/* ==========================================================================
+   XIN SHUI - OVERRIDE BLOCK v6
+   APPEND to the very END of css/styles.css, after override block v5.
+   v6 ADDS TO v5. It does NOT replace v5. All earlier blocks must remain.
+
+   DO NOT replace css/styles.css from any file outside the repository.
+   Every copy outside the repository is missing image references and
+   overwriting the file would strip the photographs off the site.
+
+   Longhand properties only. The background shorthand is never used here,
+   so every image URL declared earlier in this file survives.
+
+   Contents:
+     1. Legal page layout, shared by Disclaimer and later Privacy, Cookies, Terms
+     2. Footer legal links row
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. LEGAL PAGE LAYOUT
+   The legal pages have no hero, so the content must clear the fixed header
+   on its own. Reuses .wrap for the outer width, narrowed by .legal-in.
+   ========================================================================== */
+.legal{
+  margin-top:var(--nav-h);
+  padding-block:clamp(44px,6vw,84px);
+  background:#fff;
+}
+.legal-in{max-width:760px}
+.legal h1{
+  font-size:clamp(30px,4vw,44px);
+  margin-bottom:clamp(14px,2vw,20px);
+}
+.legal-updated{
+  font-size:12px;
+  letter-spacing:.02em;
+  color:var(--ink-60);
+  margin-bottom:clamp(24px,3.4vw,36px);
+}
+.legal h2{
+  font-size:clamp(18px,2.1vw,23px);
+  margin-top:clamp(26px,3.2vw,38px);
+  margin-bottom:9px;
+}
+.legal p{
+  font-size:15px;
+  line-height:1.72;
+  color:var(--ink-60);
+  margin-bottom:14px;
+}
+.legal a{
+  color:var(--deep);
+  border-bottom:1px solid var(--line);
+}
+.legal a:hover{border-color:var(--deep)}
+
+
+/* ==========================================================================
+   2. FOOTER LEGAL LINKS ROW
+   Sits under the fineprint. Live pages are teal links. Pages not built
+   yet are named in muted text so nothing links to a missing page.
+   ========================================================================== */
+.foot-legal-links{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 16px;
+  align-items:center;
+}
+.foot-legal-links a{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--deep);
+}
+.foot-legal-links a:hover{color:var(--ink)}
+.foot-legal-links .soon{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-60);
+}
+
+@media (max-width:560px){
+  .foot-legal-links{justify-content:center}
+}
